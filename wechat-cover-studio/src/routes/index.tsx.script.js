@@ -1,13 +1,17 @@
 {
   // ---------- Constants ----------
-  const COVER_W = 900
-  const COVER_H = 383
+  const COVER_W = 1440
+  const COVER_H = 720
+  // const COVER_W = 900
+  // const COVER_H = 383
   const THUMB_SIZE = 383
   const MAX_IMAGES = 6
   const JPEG_QUALITY = 0.92
-  const BG_COLOR = '#ffffff'
+  // const BG_COLOR = '#ffffff'
+  const BG_COLOR = 'gray' // 图片间隙底色（深灰，白图上也清晰可见）
+  const G = 4 // gap in px
 
-  console.log('I am here!')
+  // console.log('I am here!')
 
   // ---------- State ----------
   /** @type {{ img: HTMLImageElement, url: string }[]} */
@@ -17,7 +21,7 @@
   // ---------- DOM ----------
   const stage = document.getElementById('stage')
   const canvas = document.getElementById('preview')
-  console.log('canvas:', canvas)
+  // console.log('canvas:', canvas)
   const ctx = canvas.getContext('2d')
   const dropzone = document.getElementById('dropzone')
   const strip = document.getElementById('strip')
@@ -60,42 +64,54 @@
   function getCells(n) {
     const W = COVER_W,
       H = COVER_H
-    if (n <= 1) return [{ x: 0, y: 0, w: W, h: H }]
-    if (n === 2) {
-      const w = W / 2
-      return [
-        { x: 0, y: 0, w, h: H },
-        { x: w, y: 0, w, h: H },
-      ]
+
+    // Build raw grid cells, then inset each by G/2 on shared edges.
+    // Outer edges are not inset (no outer margin).
+    let cols,
+      rows,
+      raw = []
+
+    if (n <= 1) {
+      return [{ x: 0, y: 0, w: W, h: H }]
+    } else if (n === 2) {
+      cols = 2
+      rows = 1
+    } else if (n === 3) {
+      cols = 3
+      rows = 1
+    } else if (n === 4) {
+      cols = 2
+      rows = 2
+    } else {
+      cols = 3
+      rows = 2 // 5 or 6
     }
-    if (n === 3) {
-      const w = W / 3
-      return [
-        { x: 0, y: 0, w, h: H },
-        { x: w, y: 0, w, h: H },
-        { x: w * 2, y: 0, w, h: H },
-      ]
-    }
-    if (n === 4) {
-      const w = W / 2,
-        h = H / 2
-      return [
-        { x: 0, y: 0, w, h },
-        { x: w, y: 0, w, h },
-        { x: 0, y: h, w, h },
-        { x: w, y: h, w, h },
-      ]
-    }
-    // 5 or 6: 3 columns × 2 rows. For 5, cells[5] (bottom-right) is unused.
-    const w = W / 3,
-      h = H / 2
-    const cells = []
-    for (let r = 0; r < 2; r++) {
-      for (let c = 0; c < 3; c++) {
-        cells.push({ x: c * w, y: r * h, w, h })
+
+    // Raw equal cells
+    const cw = W / cols
+    const ch = H / rows
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        raw.push({ x: c * cw, y: r * ch, w: cw, h: ch, col: c, row: r })
       }
     }
-    return cells.slice(0, n)
+
+    // For 5 images, drop the last cell (bottom-right) — leave blank.
+    if (n === 5) raw = raw.slice(0, 5)
+
+    // Inset each cell by G/2 on edges shared with a neighbor.
+    return raw.map((cell) => {
+      const left = cell.col > 0 ? G / 2 : 0
+      const right = cell.col < cols - 1 ? G / 2 : 0
+      const top = cell.row > 0 ? G / 2 : 0
+      const bottom = cell.row < rows - 1 ? G / 2 : 0
+      return {
+        x: cell.x + left,
+        y: cell.y + top,
+        w: cell.w - left - right,
+        h: cell.h - top - bottom,
+      }
+    })
   }
 
   // ---------- Draw one image cover-cropped (center) into a rect on target ctx ----------
@@ -467,6 +483,17 @@
       addFiles(files)
     }
   })
+
+  /**
+   *
+   * @returns {string}
+   * @example wechat_cover_yyyy_MM_dd_HH_mm_ss_ms.jpg'
+   */
+  const genFilename = () => {
+    // wechat_cover_2026_10_30_10_21_15_678.jpg
+    const date = new Date()
+    return `wechat_cover_${date.getFullYear()}_${date.getMonth() + 1}_${date.getDate()}_${date.getHours()}_${date.getMinutes()}_${date.getSeconds()}_${date.getMilliseconds()}.jpg`
+  }
 
   // Buttons
   dlCover.addEventListener('click', () => {
