@@ -11,6 +11,7 @@ import { DropStage } from '#/components/DropStage'
 import { ThumbnailStrip } from '#/components/ThumbnailStrip'
 import { useToast } from '#/hooks/useToast'
 import { type ImageItem, isImageFile, loadImageFromFile } from '#/lib/file'
+import { GapColorPicker } from '#/components/GapColorPicker'
 
 export const Route = createFileRoute('/')({
   component: App,
@@ -26,6 +27,8 @@ type Cell = {
 const COVER_W = 1440
 const COVER_H = 720
 const GAP = 8 // gap in px
+// const BG_COLOR = 'white' // 图片间隙底色（深灰，白图上也清晰可见）
+const BG_COLOR = 'gray' // 图片间隙底色（深灰，白图上也清晰可见）
 
 function App() {
   // ---------- Constants ----------
@@ -36,12 +39,12 @@ function App() {
   const MAX_IMAGES = 6
   const JPEG_QUALITY = 0.92
   // const BG_COLOR = '#ffffff'
-  const BG_COLOR = 'gray' // 图片间隙底色（深灰，白图上也清晰可见）
 
   // console.log('I am here!')
 
   // ---------- State ----------
   const [items, setItems] = useState<ImageItem[]>([])
+  const [gapColor, setGapColor] = useState<string>(BG_COLOR)
   // let dragSrcIndex = -1
 
   // ---------- DOM ----------
@@ -81,7 +84,7 @@ function App() {
   const composeOnto = useCallback(
     (targetCtx: CanvasRenderingContext2D, targetW: number, targetH: number) => {
       const scale = targetW / COVER_W
-      targetCtx.fillStyle = BG_COLOR
+      targetCtx.fillStyle = gapColor
       targetCtx.fillRect(0, 0, targetW, targetH)
 
       if (items.length === 0) return
@@ -91,7 +94,7 @@ function App() {
         drawCover(targetCtx, items[i].img, cells[i], scale)
       }
     },
-    [items],
+    [items, gapColor],
   )
 
   // ---------- Re-render preview ----------
@@ -292,7 +295,7 @@ function App() {
     c.height = THUMB_SIZE
     const cx = c.getContext('2d')
     if (!cx) throw new Error('no canvas context')
-    cx.fillStyle = BG_COLOR
+    cx.fillStyle = gapColor
     cx.fillRect(0, 0, THUMB_SIZE, THUMB_SIZE)
     // Center-crop the cover: take THUMB_SIZE x THUMB_SIZE window centered.
     const sx = (COVER_W - THUMB_SIZE) / 2
@@ -507,6 +510,9 @@ function App() {
           >
             下载缩略图
           </button>
+
+          <GapColorPicker initialColor={BG_COLOR} onChange={setGapColor} />
+
           <div className="spacer"></div>
           <button
             className="btn btn-secondary"
