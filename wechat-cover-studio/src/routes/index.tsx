@@ -5,36 +5,32 @@
 /** biome-ignore-all lint/complexity/useOptionalChain: <explanation> */
 /** biome-ignore-all lint/a11y/useButtonType: <explanation> */
 import { createFileRoute } from '@tanstack/react-router'
-import './index.css'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { DropStage } from '#/components/DropStage'
+import { FitModeToggle } from '#/components/FitModeToggle'
+import { GapColorPicker } from '#/components/GapColorPicker'
 import { ThumbnailStrip } from '#/components/ThumbnailStrip'
 import { useToast } from '#/hooks/useToast'
+import { type Cell, drawImageToCell, type FitMode } from '#/lib/draw'
 import { type ImageItem, isImageFile, loadImageFromFile } from '#/lib/file'
-import { GapColorPicker } from '#/components/GapColorPicker'
+
+import './index.css'
 
 export const Route = createFileRoute('/')({
   component: App,
 })
 
-type Cell = {
-  x: number
-  y: number
-  w: number
-  h: number
-}
-
-const COVER_W = 1440
-const COVER_H = 720
-const GAP = 8 // gap in px
+const COVER_W = 900
+const COVER_H = 383
+// const COVER_W = 1440
+// const COVER_H = 720
+const GAP = 5 // gap in px
 // const BG_COLOR = 'white' // 图片间隙底色（深灰，白图上也清晰可见）
-const BG_COLOR = 'gray' // 图片间隙底色（深灰，白图上也清晰可见）
-
+const BG_COLOR = '#c1cbcc' // 图片间隙底色（深灰，白图上也清晰可见）
+// #6ff1a3
 function App() {
   // ---------- Constants ----------
 
-  // const COVER_W = 900
-  // const COVER_H = 383
   const THUMB_SIZE = 383
   const MAX_IMAGES = 6
   const JPEG_QUALITY = 0.92
@@ -45,6 +41,8 @@ function App() {
   // ---------- State ----------
   const [items, setItems] = useState<ImageItem[]>([])
   const [gapColor, setGapColor] = useState<string>(BG_COLOR)
+  const [fitMode, setFitMode] = useState<FitMode>('cover')
+
   // let dragSrcIndex = -1
 
   // ---------- DOM ----------
@@ -91,108 +89,11 @@ function App() {
 
       const cells = getCells(items.length)
       for (let i = 0; i < items.length; i++) {
-        drawCover(targetCtx, items[i].img, cells[i], scale)
+        drawImageToCell(targetCtx, items[i].img, cells[i], scale, fitMode)
       }
     },
-    [items, gapColor],
+    [items, gapColor, fitMode],
   )
-
-  // ---------- Re-render preview ----------
-
-  // ---------- Thumbnail strip ----------
-  // function renderStrip() {
-  //   strip.innerHTML = ''
-  //   items.forEach((item, i) => {
-  //     const el = document.createElement('div')
-  //     el.className = 'thumb'
-  //     el.draggable = true
-  //     el.dataset.index = i
-
-  //     const img = document.createElement('img')
-  //     img.src = item.url
-  //     img.alt = `图片 ${i + 1}`
-  //     el.appendChild(img)
-
-  //     const idx = document.createElement('span')
-  //     idx.className = 'idx'
-  //     idx.textContent = i + 1
-  //     el.appendChild(idx)
-
-  //     const rm = document.createElement('button')
-  //     rm.className = 'remove'
-  //     rm.textContent = '×'
-  //     rm.title = '移除'
-  //     rm.addEventListener('click', (e) => {
-  //       e.stopPropagation()
-  //       removeAt(i)
-  //     })
-  //     el.appendChild(rm)
-
-  //     // Mobile move buttons
-  //     const move = document.createElement('div')
-  //     move.className = 'move'
-  //     const left = document.createElement('button')
-  //     left.textContent = '←'
-  //     left.title = '左移'
-  //     left.addEventListener('click', (e) => {
-  //       e.stopPropagation()
-  //       moveItem(i, i - 1)
-  //     })
-  //     const right = document.createElement('button')
-  //     right.textContent = '→'
-  //     right.title = '右移'
-  //     right.addEventListener('click', (e) => {
-  //       e.stopPropagation()
-  //       moveItem(i, i + 1)
-  //     })
-  //     move.appendChild(left)
-  //     move.appendChild(right)
-  //     el.appendChild(move)
-
-  //     // Drag events
-  //     el.addEventListener('dragstart', (e) => {
-  //       dragSrcIndex = i
-  //       el.classList.add('dragging')
-  //       e.dataTransfer.effectAllowed = 'move'
-  //       try {
-  //         e.dataTransfer.setData('text/plain', String(i))
-  //       } catch (_) {}
-  //     })
-  //     el.addEventListener('dragend', () => {
-  //       el.classList.remove('dragging')
-  //       dragSrcIndex = -1
-  //       strip
-  //         .querySelectorAll('.drop-target')
-  //         .forEach((n) => n.classList.remove('drop-target'))
-  //     })
-  //     el.addEventListener('dragover', (e) => {
-  //       e.preventDefault()
-  //       e.dataTransfer.dropEffect = 'move'
-  //       if (dragSrcIndex !== -1 && dragSrcIndex !== i)
-  //         el.classList.add('drop-target')
-  //     })
-  //     el.addEventListener('dragleave', () => el.classList.remove('drop-target'))
-  //     el.addEventListener('drop', (e) => {
-  //       e.preventDefault()
-  //       el.classList.remove('drop-target')
-  //       if (dragSrcIndex === -1 || dragSrcIndex === i) return
-  //       moveItem(dragSrcIndex, i)
-  //     })
-
-  //     strip.appendChild(el)
-  //   })
-
-  //   // "+" add-more tile (only when under cap)
-  //   if (items.length > 0 && items.length < MAX_IMAGES) {
-  //     const add = document.createElement('button')
-  //     add.className = 'thumb add-more'
-  //     add.type = 'button'
-  //     add.title = '继续添加图片'
-  //     add.textContent = '+'
-  //     add.addEventListener('click', () => fileInput.click())
-  //     strip.appendChild(add)
-  //   }
-  // }
 
   // ---------- Mutations ----------
   const handleMove = (from: number, to: number) => {
@@ -217,10 +118,7 @@ function App() {
     items.forEach((it) => {
       URL.revokeObjectURL(it.url)
     })
-    // items = []
     setItems([])
-    // todo
-    // renderStrip()
   }
 
   const addFiles = useCallback(
@@ -456,7 +354,8 @@ function App() {
         {/* <h1>微信公众号封面拼接工具</h1> */}
         <p className="sub">
           {/* 拖入 1–6 张图片，自动拼接为 2.35:1 公众号封面（900×383），并生成 1:1 */}
-          拖入 1–6 张图片，自动拼接为 2.35:1 封面（900×383），并生成 1:1 缩略图
+          拖入 1–6 张图片，自动拼接为 <code>2.35:1</code> 封面（
+          <code>900×383</code>），并生成 <code>1:1</code> 缩略图
         </p>
 
         <DropStage
@@ -509,7 +408,11 @@ function App() {
           onAddMore={() => fileInputRef.current?.click()}
         />
 
-        <div className="actions">
+        <div className="actions items-center">
+          <FitModeToggle value={fitMode} onChange={setFitMode} />
+
+          <GapColorPicker initialColor={BG_COLOR} onChange={setGapColor} />
+          <span className="vertical-separator w-0.5 bg-gray-300 inline-block h-[1.2em]"></span>
           <button
             className="btn btn-primary"
             id="dlCover"
@@ -526,9 +429,6 @@ function App() {
           >
             下载缩略图
           </button>
-
-          <GapColorPicker initialColor={BG_COLOR} onChange={setGapColor} />
-
           <div className="spacer"></div>
           <button
             className="btn btn-secondary"
@@ -600,40 +500,4 @@ function getCells(n: number) {
       h: cell.h - top - bottom,
     }
   })
-}
-
-// ---------- Draw one image cover-cropped (center) into a rect on target ctx ----------
-function drawCover(
-  targetCtx: CanvasRenderingContext2D,
-  img: HTMLImageElement,
-  cell: Cell,
-  scale = 1,
-) {
-  const cx = cell.x * scale,
-    cy = cell.y * scale
-  const cw = cell.w * scale,
-    ch = cell.h * scale
-
-  const iw = img.naturalWidth || img.width
-  const ih = img.naturalHeight || img.height
-  if (!iw || !ih) return
-
-  const cellRatio = cw / ch
-  const imgRatio = iw / ih
-
-  let sx: number, sy: number, sw: number, sh: number
-  if (imgRatio > cellRatio) {
-    // image wider than cell → crop sides
-    sh = ih
-    sw = ih * cellRatio
-    sx = (iw - sw) / 2
-    sy = 0
-  } else {
-    // image taller than cell → crop top/bottom
-    sw = iw
-    sh = iw / cellRatio
-    sx = 0
-    sy = (ih - sh) / 2
-  }
-  targetCtx.drawImage(img, sx, sy, sw, sh, cx, cy, cw, ch)
 }
