@@ -7,10 +7,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 import './index.css'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useToast } from '#/hooks/useToast'
-import { ThumbnailStrip } from '#/components/ThumbnailStrip'
 import { DropStage } from '#/components/DropStage'
-import { isImageFile, loadImageFromFile, type ImageItem } from '#/lib/file'
+import { ThumbnailStrip } from '#/components/ThumbnailStrip'
+import { useToast } from '#/hooks/useToast'
+import { type ImageItem, isImageFile, loadImageFromFile } from '#/lib/file'
 
 export const Route = createFileRoute('/')({
   component: App,
@@ -25,7 +25,7 @@ type Cell = {
 
 const COVER_W = 1440
 const COVER_H = 720
-const G = 4 // gap in px
+const GAP = 8 // gap in px
 
 function App() {
   // ---------- Constants ----------
@@ -53,7 +53,7 @@ function App() {
   // const strip = document.getElementById('strip')
   // const fileInput = document.getElementById('fileInput')
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const fileInput = fileInputRef.current
+  // const fileInput = fileInputRef.current
 
   // const dlCover = document.getElementById('dlCover')
   // const dlThumb = document.getElementById('dlThumb')
@@ -334,7 +334,7 @@ function App() {
   // ---------- Event wiring ----------
   const [fileInputValue, setFileInputValue] = useState('')
   // @ts-expect-error
-  const handleDropzoneClick = () => fileInput.click()
+  const handleDropzoneClick = () => fileInputRef.current.click()
   const onFileInputChange = (
     e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>,
   ) => {
@@ -383,6 +383,8 @@ function App() {
         addFiles(files)
       }
     }
+
+    console.log('window:', window)
 
     window.addEventListener('paste', handlePaste)
     return () => window.removeEventListener('paste', handlePaste)
@@ -469,16 +471,16 @@ function App() {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="1.6"
+              strokeWidth="1.6"
             >
               <path
                 d="M12 16V4m0 0L8 8m4-4l4 4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"
-                stroke-linecap="round"
+                strokeLinecap="round"
               />
             </svg>
             <span className="hint">拖入图片</span>
@@ -583,10 +585,10 @@ function getCells(n: number) {
 
   // Inset each cell by G/2 on edges shared with a neighbor.
   return raw.map((cell) => {
-    const left = cell.col > 0 ? G / 2 : 0
-    const right = cell.col < cols - 1 ? G / 2 : 0
-    const top = cell.row > 0 ? G / 2 : 0
-    const bottom = cell.row < rows - 1 ? G / 2 : 0
+    const left = cell.col > 0 ? GAP / 2 : 0
+    const right = cell.col < cols - 1 ? GAP / 2 : 0
+    const top = cell.row > 0 ? GAP / 2 : 0
+    const bottom = cell.row < rows - 1 ? GAP / 2 : 0
     return {
       x: cell.x + left,
       y: cell.y + top,
