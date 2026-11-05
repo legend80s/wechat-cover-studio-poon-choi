@@ -491,7 +491,23 @@ function App() {
           </div>
         </DropStage>
 
-        <div className="strip" id="strip"></div>
+        <input
+          type="file"
+          id="fileInput"
+          ref={fileInputRef}
+          onChange={(event) => onFileInputChange(event)}
+          value={fileInputValue}
+          accept="image/*"
+          multiple
+        />
+
+        <ThumbnailStrip
+          items={items}
+          maxImages={MAX_IMAGES}
+          onRemove={handleRemove}
+          onMove={handleMove}
+          onAddMore={() => fileInputRef.current?.click()}
+        />
 
         <div className="actions">
           <button
@@ -524,24 +540,6 @@ function App() {
           </button>
         </div>
       </div>
-
-      <input
-        type="file"
-        id="fileInput"
-        ref={fileInputRef}
-        onChange={(event) => onFileInputChange(event)}
-        value={fileInputValue}
-        accept="image/*"
-        multiple
-      />
-
-      <ThumbnailStrip
-        items={items}
-        maxImages={MAX_IMAGES}
-        onRemove={handleRemove}
-        onMove={handleMove}
-        onAddMore={() => fileInputRef.current?.click()}
-      />
 
       <div id="toasts" ref={containerRef}></div>
     </main>
