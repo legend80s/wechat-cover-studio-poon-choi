@@ -10,8 +10,8 @@ export const config = {
   }, // 图片间隙底色（深灰，白图上也清晰可见）,
 
   PRESETS: [
-    'white',
     'yellowgreen',
+    'white',
     '#6ff1a3',
     '#7a7c88',
     '#bfbfbf',
