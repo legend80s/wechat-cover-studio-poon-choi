@@ -15,19 +15,15 @@ import { type Cell, drawImageToCell, type FitMode } from '#/lib/draw'
 import { type ImageItem, isImageFile, loadImageFromFile } from '#/lib/file'
 
 import './index.css'
+import { config } from '#/lib/config'
+import { VerticalSeparator } from '#/components/VerticalSeparator'
 
 export const Route = createFileRoute('/')({
   component: App,
 })
 
-const COVER_W = 900
-const COVER_H = 383
-// const COVER_W = 1440
-// const COVER_H = 720
-const GAP = 5 // gap in px
-// const BG_COLOR = 'white' // 图片间隙底色（深灰，白图上也清晰可见）
-const BG_COLOR = '#c1cbcc' // 图片间隙底色（深灰，白图上也清晰可见）
-// #6ff1a3
+const { COVER_W, COVER_H, GAP, GAP_COLOR: BG_COLOR } = config
+
 function App() {
   // ---------- Constants ----------
 
@@ -411,8 +407,16 @@ function App() {
         <div className="actions items-center">
           <FitModeToggle value={fitMode} onChange={setFitMode} />
 
-          <GapColorPicker initialColor={BG_COLOR} onChange={setGapColor} />
-          <span className="vertical-separator w-0.5 bg-gray-300 inline-block h-[1.2em]"></span>
+          <VerticalSeparator />
+
+          <GapColorPicker
+            presetColors={config.PRESETS}
+            initialColor={BG_COLOR}
+            onChange={setGapColor}
+          />
+
+          <VerticalSeparator />
+
           <button
             className="btn btn-primary"
             id="dlCover"
