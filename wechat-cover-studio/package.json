@@ -10,6 +10,10 @@
   "bin": {
     "poon-choi": "./bin/index.ts"
   },
+  "files": [
+    "bin/",
+    "src/"
+  ],
   "scripts": {
     "dev": "vite dev --port 3000",
     "generate-routes": "tsr generate",
