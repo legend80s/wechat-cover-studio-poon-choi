@@ -63,5 +63,16 @@
       "esbuild",
       "lightningcss"
     ]
-  }
+  },
+  "keywords": [
+    "wechat",
+    "cover",
+    "thumbnail",
+    "公众号封面",
+    "image-collage",
+    "image-stitch",
+    "photo-merge",
+    "canvas",
+    "local-server"
+  ]
 }

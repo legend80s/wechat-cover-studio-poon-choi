@@ -6,3 +6,5 @@
 - [ ] 支持多种剪裁模式
 - [ ] 记住上一次的颜色设置
 - [ ] 图片 width 倍数可以调整
+- [ ] build and write a light server
+- [ ] logo 盆菜实图转动漫或像素或 svg 手绘
