@@ -1,6 +1,6 @@
 {
   "name": "poon-choi",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "poon-choi 🍲 is a wechat-cover-studio: a cover mosaic tool to generate wechat (2.35:1) cover image using multiple images",
   "private": false,
   "type": "module",
@@ -28,7 +28,7 @@
     "pub:minor": "npm version minor",
     "pub:major": "npm version major",
     "preversion": "npm test",
-    "postversion": "npm publish && git push && git push --tags"
+    "postversion": "npm publish && git commit -m 'chore: publish' package.json && git push && git push --tags"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
