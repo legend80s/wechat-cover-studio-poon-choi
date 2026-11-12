@@ -24,7 +24,7 @@ function main() {
     },
   });
 
-  console.log(values);
+  // console.log(values);
 
   const port = Number(values.port);
   // validate port in a valid range
@@ -36,12 +36,12 @@ function main() {
     return 
   }
 
-  if (values.version) {
-    console.log(`${name} v${version}`);
-    return;
+  if (true || values.version) {
+    console.log(`${name} v${version}\n\n---\n`);
+    // return;
   }
 
-  spawn('npx', ['vite', 'dev', `--port=${port}`], {
+  spawn('npx', ['vite', 'dev', `--port=${port}`, '--clearScreen false'], {
     stdio: 'inherit',
     shell: true,
   })
