@@ -1,9 +1,12 @@
 {
-  "name": "wechat-cover-studio",
+  "name": "poon-choi",
   "private": true,
   "type": "module",
   "imports": {
     "#/*": "./src/*"
+  },
+  "bin": {
+    "poon-choi": "./bin/index.ts"
   },
   "scripts": {
     "dev": "vite dev --port 3000",

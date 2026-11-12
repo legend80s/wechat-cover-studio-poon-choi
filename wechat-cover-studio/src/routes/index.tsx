@@ -77,7 +77,7 @@ function App() {
   const composeOnto = useCallback(
     (targetCtx: CanvasRenderingContext2D, targetW: number, targetH: number) => {
       const scale = targetW / COVER_W
-      console.log('COVER_W:', COVER_W)
+      // console.log('COVER_W:', COVER_W)
       targetCtx.fillStyle = gapColor
       targetCtx.fillRect(0, 0, targetW, targetH)
 
