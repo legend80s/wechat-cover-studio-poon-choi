@@ -11,6 +11,7 @@ function main() {
   const { values } = parseArgs({
     options: {
       port: {
+        short: 'p',
         type: 'string',
         default: '3000',
       },
