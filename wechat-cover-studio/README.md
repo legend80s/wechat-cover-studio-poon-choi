@@ -1,5 +1,7 @@
 # 🥘 poon-choi
 
+English | [中文](./README.zh.md)
+
 > A tiny local server that plates up your images into a WeChat cover — like a **poon choi**, one basin holding many ingredients, layer by layer.
 
 [![npm version](https://img.shields.io/npm/v/poon-choi.svg)](https://www.npmjs.com/package/poon-choi)

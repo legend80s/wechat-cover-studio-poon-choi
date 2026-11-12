@@ -1,5 +1,7 @@
 # 🥘 盆菜（poon-choi）
 
+[English](./README.md) | 中文
+
 > 一个轻量本地服务，把多张图片拼合成微信封面——就像一份**盆菜**，一钵容纳多种不同食材。
 
 [![npm version](https://img.shields.io/npm/v/poon-choi.svg)](https://www.npmjs.com/package/poon-choi)
