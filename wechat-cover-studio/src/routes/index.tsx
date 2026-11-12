@@ -15,21 +15,20 @@ import { type Cell, drawImageToCell, type FitMode } from '#/lib/draw'
 import { type ImageItem, isImageFile, loadImageFromFile } from '#/lib/file'
 
 import './index.css'
-import { config } from '#/lib/config'
 import { VerticalSeparator } from '#/components/VerticalSeparator'
+import { config } from '#/lib/config'
 
 export const Route = createFileRoute('/')({
   component: App,
 })
 
-const { COVER_W, COVER_H, GAP, GAP_COLOR: BG_COLOR } = config
+const { COVER_W, COVER_H, GAP, GAP_COLOR: BG_COLOR, JPEG_QUALITY } = config
 
 function App() {
   // ---------- Constants ----------
 
   const THUMB_SIZE = 383
   const MAX_IMAGES = 6
-  const JPEG_QUALITY = 0.92
   // const BG_COLOR = '#ffffff'
 
   // console.log('I am here!')
@@ -78,6 +77,7 @@ function App() {
   const composeOnto = useCallback(
     (targetCtx: CanvasRenderingContext2D, targetW: number, targetH: number) => {
       const scale = targetW / COVER_W
+      console.log('COVER_W:', COVER_W)
       targetCtx.fillStyle = gapColor
       targetCtx.fillRect(0, 0, targetW, targetH)
 
@@ -209,6 +209,7 @@ function App() {
   }
 
   function downloadCanvas(c: HTMLCanvasElement, filename: string) {
+    console.log('JPEG_QUALITY:', JPEG_QUALITY)
     c.toBlob(
       (blob) => {
         if (!blob) {
@@ -281,7 +282,7 @@ function App() {
       }
     }
 
-    console.log('window:', window)
+    // console.log('window:', window)
 
     window.addEventListener('paste', handlePaste)
     return () => window.removeEventListener('paste', handlePaste)
@@ -351,7 +352,10 @@ function App() {
         <p className="sub">
           {/* 拖入 1–6 张图片，自动拼接为 2.35:1 公众号封面（900×383），并生成 1:1 */}
           拖入 1–6 张图片，自动拼接为 <code>2.35:1</code> 封面（
-          <code>900×383</code>），并生成 <code>1:1</code> 缩略图
+          <code>
+            {COVER_W}×{COVER_H}
+          </code>
+          ），并生成 <code>1:1</code> 缩略图
         </p>
 
         <DropStage

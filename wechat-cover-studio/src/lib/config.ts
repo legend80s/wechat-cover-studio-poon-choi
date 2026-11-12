@@ -1,6 +1,10 @@
+const SCALE = 2
+
 export const config = {
-  COVER_W: 900,
-  COVER_H: 383,
+  COVER_W: 900 * SCALE,
+  COVER_H: 383 * SCALE,
+  JPEG_QUALITY: 0.92,
+
   //  COVER_W : 1440,
   //  COVER_H : 720,
   GAP: 5, // gap in px,
@@ -10,8 +14,8 @@ export const config = {
   }, // 图片间隙底色（深灰，白图上也清晰可见）,
 
   PRESETS: [
-    'yellowgreen',
     'white',
+    'yellowgreen',
     '#6ff1a3',
     '#7a7c88',
     '#bfbfbf',
