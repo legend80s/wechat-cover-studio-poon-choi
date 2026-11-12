@@ -28,7 +28,7 @@
     "pub:minor": "npm version minor",
     "pub:major": "npm version major",
     "preversion": "npm test",
-    "postversion": "npm publish && git commit -m 'chore: publish' package.json && git push && git push --tags"
+    "postversion": "npm publish && git commit -m \"chore: publish\" package.json && git push && git push --tags"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",

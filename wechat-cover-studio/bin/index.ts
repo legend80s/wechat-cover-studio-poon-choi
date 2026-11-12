@@ -4,6 +4,7 @@
 
 import { spawn } from 'node:child_process';
 import { parseArgs } from 'node:util';
+import { version, name } from '../package.json';
 
 main();
 
@@ -15,6 +16,11 @@ function main() {
         type: 'string',
         default: '3000',
       },
+
+      version: {
+        short: 'v',
+        type: 'boolean',
+      }
     },
   });
 
@@ -28,6 +34,11 @@ function main() {
     process.exitCode =1;
 
     return 
+  }
+
+  if (values.version) {
+    console.log(`${name} v${version}`);
+    return;
   }
 
   spawn('npx', ['vite', 'dev', `--port=${port}`], {
