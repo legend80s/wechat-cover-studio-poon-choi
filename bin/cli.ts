@@ -4,7 +4,7 @@
 
 import { spawn } from 'node:child_process';
 import { parseArgs } from 'node:util';
-import { version, name } from '../wechat-cover-studio/package.json';
+import { version, name } from '../package.json';
 
 main();
 
