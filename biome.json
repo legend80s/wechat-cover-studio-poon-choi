@@ -8,6 +8,7 @@
   "files": {
     "ignoreUnknown": false,
     "includes": [
+      "**/bin/**/*",
       "**/src/**/*",
       "**/.vscode/**/*",
       "**/index.html",

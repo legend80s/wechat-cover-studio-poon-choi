@@ -2,17 +2,27 @@
 
 // vite dev --port 3000
 
-import { spawn } from 'node:child_process';
+import net from 'node:net';
+import { spawn, spawnSync } from 'node:child_process';
 import { parseArgs, styleText } from 'node:util';
 import pkg from '../package.json' with { type: 'json' };
+import { join } from 'node:path';
 
 // console.log('pkg:', pkg);
 
 const { version, name, description } = pkg;
 
+const check = (port: number) =>
+  new Promise((res) => {
+    const s = net.createServer();
+    s.once('error', (e) => res(e.code === 'EADDRINUSE'));
+    s.once('listening', () => s.close(() => res(false)));
+    s.listen(port);
+  });
+
 main();
 
-function main() {
+async function main() {
   const { values } = parseArgs({
     options: {
       port: {
@@ -24,10 +34,10 @@ function main() {
         short: 'v',
         type: 'boolean',
       },
-      help : {
+      help: {
         short: 'h',
         type: 'boolean',
-      }
+      },
     },
   });
 
@@ -35,12 +45,15 @@ function main() {
 
   const port = Number(values.port);
   // validate port in a valid range
-  const valid = port >= 1024 && port <= 65535
-  if (!valid) {
-    console.error(`Invalid port number ${values.port}, should be between 1024 and 65535`);
-    process.exitCode =1;
+  const valid = port >= 1024 && port <= 65535;
 
-    return 
+  if (!valid) {
+    console.error(
+      `Invalid port number ${values.port}, should be between 1024 and 65535`
+    );
+    process.exitCode = 1;
+
+    return;
   }
 
   if (values.version || values.help) {
@@ -50,25 +63,38 @@ function main() {
 
   console.log(`\n${name} v${version}\n\n---\n`);
 
-  spawn('node', ['.output/server/index.mjs'], {
+  if (await check(port)) {
+    console.error(
+      'port',
+      styleText('red', values.port),
+      'in use, try another one.'
+    );
+    process.exitCode = 1;
+
+    return;
+  }
+
+  const dirname = import.meta.dirname;
+
+  spawnSync('node', [join(dirname, '../.output/server/index.mjs')], {
     stdio: 'inherit',
-    shell: true,
+    // shell: true,
     env: {
       ...process.env,
       PORT: values.port,
-    }
-  })
+    },
+  });
 }
 
 function printHelp(verbose: boolean) {
   console.log(`\n${name} v${version}`);
 
   if (!verbose) {
-    return
+    return;
   }
 
   console.log();
-  console.log('>', styleText('green', description), '\n')
+  console.log('>', styleText('green', description), '\n');
 
   console.log('Usage: npx poon-choi [options]');
   console.log();
