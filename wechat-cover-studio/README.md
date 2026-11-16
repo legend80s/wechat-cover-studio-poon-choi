@@ -2,11 +2,14 @@
 
 English | [中文](./README.zh.md)
 
+<p align="center">
+  <img src="https://koboyo.com/icons/svg/geometric-mezze-platter.svg" width="30%" />
+</p>
+
 > A tiny local server that plates up your images into a WeChat cover — like a **poon choi**, one basin holding many ingredients, layer by layer.
 
 [![npm version](https://img.shields.io/npm/v/poon-choi.svg)](https://www.npmjs.com/package/poon-choi)
 [![npm downloads](https://img.shields.io/npm/dm/poon-choi.svg)](https://www.npmjs.com/package/poon-choi)
-[![license](https://img.shields.io/npm/l/poon-choi.svg)](./LICENSE)
 
 **poon-choi** (盆菜) is a Cantonese dish where many ingredients are stacked in one basin and shared from the top down. This tool does the same for images: drop in 1–6 pictures, and it plates them into a single **2.35:1 WeChat cover (900×383)**, plus a **1:1 thumbnail (383×383)**.
 
@@ -104,7 +107,3 @@ pnpm install
 pnpm dev        # start the local server in watch mode
 pnpm build      # build for distribution
 ```
-
-## License
-
-[MIT](./LICENSE)

@@ -1,12 +1,15 @@
 # 🥘 盆菜（poon-choi）
 
+<p align="center">
+  <img src="https://koboyo.com/icons/svg/geometric-mezze-platter.svg" width="30%" />
+</p>
+
 [English](./README.md) | 中文
 
 > 一个轻量本地服务，把多张图片拼合成微信封面——就像一份**盆菜**，一钵容纳多种不同食材。
 
 [![npm version](https://img.shields.io/npm/v/poon-choi.svg)](https://www.npmjs.com/package/poon-choi)
 [![npm downloads](https://img.shields.io/npm/dm/poon-choi.svg)](https://www.npmjs.com/package/poon-choi)
-[![license](https://img.shields.io/npm/l/poon-choi.svg)](./LICENSE)
 
 **poon-choi（盆菜）** 是一道粤菜，多种食材码在同一个盆里，由上至下享用。这个工具也是同理：放入 1–6 张图片，它会自动拼出一张 **2.35:1 的微信封面（900×383）**，同时生成一张 **1:1 的缩略图（383×383）**。
 
@@ -101,7 +104,3 @@ pnpm install
 pnpm dev        # 启动监听模式的本地服务
 pnpm build      # 打包发布版本
 ```
-
-## 许可证
-
-[MIT](./LICENSE)

@@ -64,6 +64,11 @@
       "lightningcss"
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/legend80s/wechat-cover-studio-poon-choi"
+  },
+  "homepage": "https://github.com/legend80s/wechat-cover-studio-poon-choi/blob/main/wechat-cover-studio/README.md",
   "keywords": [
     "wechat",
     "cover",
