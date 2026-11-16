@@ -37,7 +37,7 @@ function main() {
   }
 
   if (true || values.version) {
-    console.log(`${name} v${version}\n\n---\n`);
+    console.log(`\n${name} v${version}\n\n---\n`);
     // return;
   }
 

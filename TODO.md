@@ -8,3 +8,4 @@
 - [ ] 图片 width 倍数可以调整
 - [ ] build and write a light server
 - [ ] logo 盆菜实图转动漫或像素或 svg 手绘
+- [ ] pnpx poon-choi bug
