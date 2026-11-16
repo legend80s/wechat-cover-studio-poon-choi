@@ -6,6 +6,6 @@
 - [ ] 支持多种剪裁模式
 - [ ] 记住上一次的颜色设置
 - [ ] 图片 width 倍数可以调整
-- [x] build and write a light server：Reduce deps count from 14 (161) to 0 and pkg install size from 78.6 kB(157.3 MB) to todo B (todo B)
+- [x] build and write a light server：Reduce deps count from 14 (161) to 0 and pkg install size from 78.6 kB(157.3 MB) to todo 394.5 kB (1.6 MB)
 - [ ] logo 盆菜实图转动漫或像素或 svg 手绘
 - [ ] pnpx poon-choi bug
