@@ -10,6 +10,7 @@
 
 [![npm version](https://img.shields.io/npm/v/poon-choi.svg)](https://www.npmjs.com/package/poon-choi)
 [![npm downloads](https://img.shields.io/npm/dm/poon-choi.svg)](https://www.npmjs.com/package/poon-choi)
+[![0 dependencies](https://img.shields.io/badge/0-green?logo=npm&labelColor=blue&label=dependencies&color=green)](https://www.npmjs.com/package/poon-choi?activeTab=dependencies)
 
 **poon-choi（盆菜）** 是一道粤菜，多种食材码在同一个盆里，由上至下享用。这个工具也是同理：放入 1–6 张图片，它会自动拼出一张 **2.35:1 的微信封面（900×383）**，同时生成一张 **1:1 的缩略图（383×383）**。
 

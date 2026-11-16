@@ -3,8 +3,12 @@
 // vite dev --port 3000
 
 import { spawn } from 'node:child_process';
-import { parseArgs } from 'node:util';
-import { version, name } from '../package.json';
+import { parseArgs, styleText } from 'node:util';
+import pkg from '../package.json' with { type: 'json' };
+
+// console.log('pkg:', pkg);
+
+const { version, name, description } = pkg;
 
 main();
 
@@ -16,9 +20,12 @@ function main() {
         type: 'string',
         default: '3000',
       },
-
       version: {
         short: 'v',
+        type: 'boolean',
+      },
+      help : {
+        short: 'h',
         type: 'boolean',
       }
     },
@@ -36,10 +43,12 @@ function main() {
     return 
   }
 
-  if (true || values.version) {
-    console.log(`\n${name} v${version}\n\n---\n`);
-    // return;
+  if (values.version || values.help) {
+    printHelp(!!values.help);
+    return;
   }
+
+  console.log(`\n${name} v${version}\n\n---\n`);
 
   spawn('node', ['.output/server/index.mjs'], {
     stdio: 'inherit',
@@ -49,4 +58,22 @@ function main() {
       PORT: values.port,
     }
   })
+}
+
+function printHelp(verbose: boolean) {
+  console.log(`\n${name} v${version}`);
+
+  if (!verbose) {
+    return
+  }
+
+  console.log();
+  console.log('>', styleText('green', description), '\n')
+
+  console.log('Usage: npx poon-choi [options]');
+  console.log();
+  console.log('Options:');
+  console.log('  -p, --port <port>  Port to run the server on (default: 3000)');
+  console.log('  -v, --version      Print version number');
+  console.log('  -h, --help         Print this help message');
 }

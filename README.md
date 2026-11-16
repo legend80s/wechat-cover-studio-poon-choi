@@ -10,6 +10,7 @@ English | [中文](./README.zh.md)
 
 [![npm version](https://img.shields.io/npm/v/poon-choi.svg)](https://www.npmjs.com/package/poon-choi)
 [![npm downloads](https://img.shields.io/npm/dm/poon-choi.svg)](https://www.npmjs.com/package/poon-choi)
+[![0 dependencies](https://img.shields.io/badge/0-green?logo=npm&labelColor=blue&label=dependencies&color=green)](https://www.npmjs.com/package/poon-choi?activeTab=dependencies)
 
 **poon-choi** (盆菜) is a Cantonese dish where many ingredients are stacked in one basin and shared from the top down. This tool does the same for images: drop in 1–6 pictures, and it plates them into a single **2.35:1 WeChat cover (900×383)**, plus a **1:1 thumbnail (383×383)**.
 

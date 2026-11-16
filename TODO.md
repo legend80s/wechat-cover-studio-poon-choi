@@ -1,11 +1,12 @@
 - [ ] 防止丢失增加，历史记录功能
-- [ ] React
+- [x] React
 - [ ] For Q15 `wechat_cover_{image_count}_{joined_cut_file_names_of_format_index_filename_slice(0,5)}`for example: drag 2 images foo.png and 总长度30但是每一张的limit是变化的，平均分配，这样多文件则每一个文件名字长度短，否则长
 - [ ] 支持自定义颜色
+- [ ] 支持 gap size
 - [ ] 支持自定义尺寸。有预设尺寸以及是否保存自定义尺寸为预设尺寸
 - [ ] 支持多种剪裁模式
 - [ ] 记住上一次的颜色设置
 - [ ] 图片 width 倍数可以调整
 - [x] build and write a light server：Reduce deps count from 14 (161) to 0 and pkg install size from 78.6 kB(157.3 MB) to todo 394.5 kB (1.6 MB)
-- [ ] logo 盆菜实图转动漫或像素或 svg 手绘
-- [ ] pnpx poon-choi bug
+- [x] logo 盆菜实图转动漫或像素或 svg 手绘
+- [x] pnpx poon-choi bug
