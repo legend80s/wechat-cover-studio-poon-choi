@@ -27,7 +27,7 @@
     "pub:patch": "npm version patch",
     "pub:minor": "npm version minor",
     "pub:major": "npm version major",
-    "preversion": "npm test",
+    "preversion": "npm test && npm run build",
     "postversion": "npm publish && git commit -m \"chore: publish\" package.json && git push && git push --tags"
   },
   "dependencies": {

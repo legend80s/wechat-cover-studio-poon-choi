@@ -4,7 +4,7 @@
 
 import { spawn } from 'node:child_process';
 import { parseArgs } from 'node:util';
-import { version, name } from '../package.json';
+import { version, name } from '../wechat-cover-studio/package.json';
 
 main();
 
@@ -41,8 +41,12 @@ function main() {
     // return;
   }
 
-  spawn('npx', ['vite', 'dev', `--port=${port}`, '--clearScreen false'], {
+  spawn('node', ['.output/server/index.mjs'], {
     stdio: 'inherit',
     shell: true,
+    env: {
+      ...process.env,
+      PORT: values.port,
+    }
   })
 }

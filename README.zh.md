@@ -104,3 +104,11 @@ pnpm install
 pnpm dev        # 启动监听模式的本地服务
 pnpm build      # 打包发布版本
 ```
+
+## 发布
+
+```bash
+cd wechat-cover-studio
+
+npm run pub:patch/minor/major
+```

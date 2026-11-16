@@ -1,13 +1,46 @@
 {
-  "name": "wechat-cover-studio",
-  "version": "1.0.0",
-  "description": "Chimera 🦁🐐🐍 wechat-cover-studio: a cover mosaic tool to generate wechat (2.35:1) cover image using multiple images",
+  "name": "poon-choi",
+  "version": "0.0.3",
+  "description": "poon-choi 🍲 is a wechat-cover-studio: a cover mosaic tool to generate wechat (2.35:1) cover image using multiple images.",
+  "private": false,
   "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "imports": {
+    "#/*": "./src/*"
   },
-  "keywords": [],
-  "author": "",
+  "bin": {
+    "poon-choi": "./bin/cli.ts"
+  },
+  "files": [
+    ".output/"
+  ],
+  "scripts": {
+    "dev": "cd wechat-cover-studio && npm run dev",
+    "build": "cd wechat-cover-studio && vite build",
+    "test": "echo no test yet",
+    "pub:patch": "npm version patch",
+    "pub:minor": "npm version minor",
+    "pub:major": "npm version major",
+    "preversion": "cd wechat-cover-studio && npm test && npm run build",
+    "postversion": "npm publish && git commit -m \"chore: publish\" package.json && git push && git push --tags"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "pnpm": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/legend80s/wechat-cover-studio-poon-choi"
+  },
+  "homepage": "https://github.com/legend80s/wechat-cover-studio-poon-choi/blob/main/wechat-cover-studio/README.md",
+  "keywords": [
+    "wechat",
+    "cover",
+    "thumbnail",
+    "公众号封面",
+    "image-collage",
+    "image-stitch",
+    "photo-merge",
+    "canvas",
+    "local-server"
+  ],
   "license": "ISC"
 }
