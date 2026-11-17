@@ -7,7 +7,7 @@ export const config = {
 
   //  COVER_W : 1440,
   //  COVER_H : 720,
-  GAP: 5, // gap in px,
+  GAP: 10, // gap in px,
   //  BG_COLOR : 'white' // 图片间隙底色（深灰，白图上也清晰可见）,
   get GAP_COLOR() {
     return config.PRESETS[0]
