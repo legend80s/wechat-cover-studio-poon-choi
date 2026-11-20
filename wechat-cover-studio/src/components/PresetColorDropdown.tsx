@@ -55,7 +55,7 @@ export function PresetColorDropdown({
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="h-9 w-57 px-3 rounded-lg border border-slate-200 bg-white text-[13px]
+        className="h-9 w-59 px-3 rounded-lg border border-slate-200 bg-white text-[13px]
                    text-slate-600 flex justify-between items-center gap-2 hover:bg-slate-50"
       >
         预设颜色 <code className={'border-0!'}>{curColor}</code>

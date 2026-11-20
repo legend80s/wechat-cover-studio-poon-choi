@@ -111,6 +111,9 @@ export function App() {
   }
 
   function handleClearAllClick() {
+    if (!window.confirm('确定要清空所有图片吗？')) {
+      return
+    }
     items.forEach((it) => {
       URL.revokeObjectURL(it.url)
     })
@@ -348,15 +351,25 @@ export function App() {
     <main className="page-wrap px-4 pb-8 pt-14 1">
       <div className="wrap">
         <h1>封面拼接工具</h1>
-        {/* <h1>微信公众号封面拼接工具</h1> */}
-        <p className="sub">
-          {/* 拖入 1–6 张图片，自动拼接为 2.35:1 公众号封面（900×383），并生成 1:1 */}
-          拖入 1–6 张图片，自动拼接为 <code>2.35:1</code> 封面（
-          <code>
-            {COVER_W}×{COVER_H}
-          </code>
-          ），并生成 <code>1:1</code> 缩略图
-        </p>
+        <div className="flex justify-between items-center mbe-2">
+          {/* <h1>微信公众号封面拼接工具</h1> */}
+          <p className="sub">
+            {/* 拖入 1–6 张图片，自动拼接为 2.35:1 公众号封面（900×383），并生成 1:1 */}
+            拖入 1–6 张图片，自动拼接为 <code>2.35:1</code> 封面（
+            <code>
+              {COVER_W}×{COVER_H}
+            </code>
+            ），并生成 <code>1:1</code> 缩略图
+          </p>
+          <button
+            className="btn btn-danger"
+            id="clearAll"
+            disabled={items.length === 0}
+            onClick={handleClearAllClick}
+          >
+            清空
+          </button>
+        </div>
 
         <DropStage
           items={items}
@@ -408,7 +421,7 @@ export function App() {
           onAddMore={() => fileInputRef.current?.click()}
         />
 
-        <div className="actions items-center">
+        <div className="gap-3 mbs-4 flex items-center">
           <FitModeToggle value={fitMode} onChange={setFitMode} />
 
           <VerticalSeparator />
@@ -420,7 +433,21 @@ export function App() {
           />
 
           <VerticalSeparator />
+          {/* gap width setter */}
+          {/* <label htmlFor="gapColor" className="cursor-pointer">
+            间隙宽度
+          </label>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={gapWidth}
+            onChange={handleGapWidthChange}
+            className="range range-xs"
+          /> */}
+        </div>
 
+        <div className="mbs-5 gap-3 flex items-center justify-end">
           <button
             className="btn btn-primary"
             id="dlCover"
@@ -436,15 +463,6 @@ export function App() {
             onClick={handleDlThumbClick}
           >
             下载缩略图
-          </button>
-          <div className="spacer"></div>
-          <button
-            className="btn btn-secondary"
-            id="clearAll"
-            disabled={items.length === 0}
-            onClick={handleClearAllClick}
-          >
-            清空
           </button>
         </div>
       </div>

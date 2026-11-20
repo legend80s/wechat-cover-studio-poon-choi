@@ -65,7 +65,7 @@ export function ThumbnailStrip({
   const canAddMore = items.length > 0 && items.length < maxImages
 
   return (
-    <div className="strip">
+    <div className={`strip ${items.length ? 'mbs-4' : ''}`}>
       {items.map((item, i) => {
         const isDragging = dragSrc === i
         const isDropTarget = dropTarget === i
