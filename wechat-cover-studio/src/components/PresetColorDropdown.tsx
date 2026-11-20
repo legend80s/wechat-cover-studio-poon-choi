@@ -30,7 +30,7 @@ export function PresetColorDropdown({
 }: PresetDropdownProps) {
   const [open, setOpen] = useState<boolean>(false)
   const ref = useRef<HTMLDivElement | null>(null)
-  const [cycleIndex, setCycleIndex] = useState(0)
+  const [cycleIndex, setCycleIndex] = useState(1)
   // const [curColor, setCurColor] = useState<string>(PRESETS[0])
 
   useEffect(() => {

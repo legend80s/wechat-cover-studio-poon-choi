@@ -17,6 +17,7 @@ import { type ImageItem, isImageFile, loadImageFromFile } from '#/lib/file'
 import './index.css'
 import { VerticalSeparator } from '#/components/VerticalSeparator'
 import { config } from '#/lib/config'
+import { clampNumber } from '#/lib/lodash'
 
 export const Route = createFileRoute('/')({
   component: App,
@@ -37,6 +38,7 @@ export function App() {
   const [items, setItems] = useState<ImageItem[]>([])
   const [gapColor, setGapColor] = useState<string>(BG_COLOR)
   const [fitMode, setFitMode] = useState<FitMode>('cover')
+  const [gapWidth, setGapWidth] = useState(GAP)
 
   // let dragSrcIndex = -1
 
@@ -83,12 +85,12 @@ export function App() {
 
       if (items.length === 0) return
 
-      const cells = getCells(items.length)
+      const cells = getCells(items.length, gapWidth)
       for (let i = 0; i < items.length; i++) {
         drawImageToCell(targetCtx, items[i].img, cells[i], scale, fitMode)
       }
     },
-    [items, gapColor, fitMode],
+    [items, gapColor, fitMode, gapWidth],
   )
 
   // ---------- Mutations ----------
@@ -434,17 +436,25 @@ export function App() {
 
           <VerticalSeparator />
           {/* gap width setter */}
-          {/* <label htmlFor="gapColor" className="cursor-pointer">
+          <label
+            htmlFor="gapWidth"
+            className="text-sm cursor-pointer"
+            onClick={() => {
+              // increment by 1
+              setGapWidth((prev) => clampNumber(prev + 1, [0, 100]))
+            }}
+          >
             间隙宽度
           </label>
           <input
-            type="range"
+            type="number"
+            id="gapWidth"
             min="0"
             max="100"
             value={gapWidth}
-            onChange={handleGapWidthChange}
-            className="range range-xs"
-          /> */}
+            onChange={(e) => setGapWidth(Number(e.target.value))}
+            className="rounded-sm border border-gray-300 px-1 py-1"
+          />
         </div>
 
         <div className="mbs-5 gap-3 flex items-center justify-end">
@@ -475,7 +485,7 @@ export function App() {
 // ---------- Layout: cell rects for n images ----------
 // Returns array of {x,y,w,h} in cover coordinates, one per image (may be fewer
 // than total cells when n is odd on a grid — e.g. 5 in 3×2 leaves one blank).
-function getCells(n: number) {
+function getCells(n: number, gapWidth: number): Cell[] {
   const W = COVER_W,
     H = COVER_H
 
@@ -515,10 +525,10 @@ function getCells(n: number) {
 
   // Inset each cell by G/2 on edges shared with a neighbor.
   return raw.map((cell) => {
-    const left = cell.col > 0 ? GAP / 2 : 0
-    const right = cell.col < cols - 1 ? GAP / 2 : 0
-    const top = cell.row > 0 ? GAP / 2 : 0
-    const bottom = cell.row < rows - 1 ? GAP / 2 : 0
+    const left = cell.col > 0 ? gapWidth / 2 : 0
+    const right = cell.col < cols - 1 ? gapWidth / 2 : 0
+    const top = cell.row > 0 ? gapWidth / 2 : 0
+    const bottom = cell.row < rows - 1 ? gapWidth / 2 : 0
     return {
       x: cell.x + left,
       y: cell.y + top,
