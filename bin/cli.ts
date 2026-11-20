@@ -7,14 +7,16 @@ import net from 'node:net'
 import { join } from 'node:path'
 import { parseArgs, styleText } from 'node:util'
 import pkg from '../package.json' with { type: 'json' }
+import { detectLanguage } from './lang.ts'
 
 // console.log('pkg:', pkg);
 
-const { version, name, description } = pkg
+const { version, name, description, 'description.zh': descriptionZh } = pkg
 
 const check = (port: number) =>
   new Promise((res) => {
     const s = net.createServer()
+    // @ts-expect-error
     s.once('error', (e) => res(e.code === 'EADDRINUSE'))
     s.once('listening', () => s.close(() => res(false)))
     s.listen(port)
@@ -49,7 +51,7 @@ async function main() {
 
   if (!valid) {
     console.error(
-      `Invalid port number ${values.port}, should be between 1024 and 65535`,
+      `Invalid port number ${values.port}, should be in [1024, 65535]`,
     )
     process.exitCode = 1
 
@@ -90,6 +92,20 @@ function printHelp(verbose: boolean) {
   console.log(`\n${name} v${version}`)
 
   if (!verbose) {
+    return
+  }
+
+  if (detectLanguage() === 'zh') {
+    console.log()
+    console.log('>', styleText('green', descriptionZh), '\n')
+
+    console.log('用法: npx poon-choi [选项]')
+    console.log()
+    console.log('选项：')
+    console.log('  -p, --port <port>   指定封面图工具服务端口号 (默认: 3000)')
+    console.log('  -v, --version       打印版本号')
+    console.log('  -h, --help          打印帮助信息')
+
     return
   }
 

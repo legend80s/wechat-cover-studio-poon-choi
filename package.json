@@ -2,6 +2,7 @@
   "name": "poon-choi",
   "version": "1.0.1",
   "description": "poon-choi 🍲 is a wechat-cover-studio: a cover mosaic tool to generate wechat (2.35:1) cover image using multiple images.",
+  "description.zh": "poon-choi 🍲 把多张图片拼合成微信封面（2.35:1）——就像一份**盆菜**，一钵容纳多种不同食材",
   "private": false,
   "type": "module",
   "imports": {
@@ -23,8 +24,9 @@
     "preversion": "cd wechat-cover-studio && npm test && npm run build",
     "postversion": "npm publish && git push && git push --tags"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^26.6.6"
+  },
   "pnpm": {},
   "repository": {
     "type": "git",
