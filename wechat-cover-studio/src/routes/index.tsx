@@ -24,7 +24,7 @@ export const Route = createFileRoute('/')({
 
 const { COVER_W, COVER_H, GAP, GAP_COLOR: BG_COLOR, JPEG_QUALITY } = config
 
-function App() {
+export function App() {
   // ---------- Constants ----------
 
   const THUMB_SIZE = 383
