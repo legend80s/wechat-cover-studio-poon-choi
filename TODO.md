@@ -10,3 +10,4 @@
 - [x] build and write a light server：Reduce deps count from 14 (161) to 0 and pkg install size from 78.6 kB(157.3 MB) to todo 394.5 kB (1.6 MB)
 - [x] logo 盆菜实图转动漫或像素或 svg 手绘
 - [x] pnpx poon-choi bug
+- [ ] 新增集成测试：打包后解包然后运行

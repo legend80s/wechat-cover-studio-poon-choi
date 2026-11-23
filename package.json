@@ -18,7 +18,7 @@
   "scripts": {
     "dev": "cd wechat-cover-studio && npm run dev",
     "build": "cd wechat-cover-studio && vite build",
-    "test": "echo no test yet",
+    "test": "node --test",
     "pub:patch": "npm version patch",
     "pub:minor": "npm version minor",
     "pub:major": "npm version major",
