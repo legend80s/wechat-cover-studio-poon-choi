@@ -1,6 +1,6 @@
 {
   "name": "poon-choi",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "poon-choi 🍲 is a wechat-cover-studio: a cover mosaic tool to generate wechat (2.35:1) cover image using multiple images.",
   "description.zh": "poon-choi 🍲 把多张图片拼合成微信封面（2.35:1）——就像一份**盆菜**，一钵容纳多种不同食材",
   "private": false,
