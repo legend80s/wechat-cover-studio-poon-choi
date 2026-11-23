@@ -12,6 +12,7 @@
     "poon-choi": "./bin/cli.ts"
   },
   "files": [
+    "bin/",
     ".output/"
   ],
   "scripts": {
